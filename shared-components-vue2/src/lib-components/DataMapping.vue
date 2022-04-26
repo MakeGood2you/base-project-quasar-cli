@@ -181,7 +181,7 @@ export default Vue.extend({
     linkEditAction(element, itemId, updateData, options) {
 
       const { linkView, evt, magnet, arrowhead, eventName } = options
-      debugger
+
       const path = element.getItemPathArray(itemId)
       this.editRecord(element, itemId, path, updateData, eventName)
     },
@@ -229,7 +229,7 @@ export default Vue.extend({
           }.bind(this)
         });
       } else {
-        debugger
+
         element.item(itemId, updateData)
       }
 
@@ -510,7 +510,7 @@ export default Vue.extend({
       const updateData = {
         _path: ''
       }
-      debugger
+
       this.linkEditAction(element, itemId, updateData, { linkView, evt, magnet, arrowhead, eventName: 'disconnect' })
     });
     paper.on('link:pointerclick', (linkView, evt, elementView, magnet, arrowhead) => {

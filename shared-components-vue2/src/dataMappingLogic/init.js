@@ -204,7 +204,7 @@ function init(schema, inputJson) {
     const outputJson = objectMapperTransformer.mapObject({ data: inputJson })
 
     const objectMapperShape = [objectMapperSchema2Shape(objectMapperTransformer.schema)]
-    debugger
+    
     const inputShape = transformJSONShape(inputJson)
     const outputShape = transformJSONShape(outputJson)
 

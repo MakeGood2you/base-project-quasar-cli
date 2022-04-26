@@ -379,7 +379,7 @@ export const init = () => {
     }
     
     function itemEditAction(element, itemId) {
-        debugger
+        
         const config = element.getInspectorConfig(itemId);
         const path = element.getItemPathArray(itemId);
         itemAction(element, config, path);
