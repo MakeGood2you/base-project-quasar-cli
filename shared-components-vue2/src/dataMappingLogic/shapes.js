@@ -1,4 +1,5 @@
-import { shapes, util } from '@clientio/rappid';
+import { shapes, util } from '@OtailO-recommerce/rappid';
+import { _replaceAll, cutStringFromSymbol, createKeyValueString, deleteStringFromSymbol } from '../utils/strings';
 
 export class Link extends shapes.standard.Link {
     defaults() {
@@ -21,338 +22,42 @@ export class Link extends shapes.standard.Link {
             }
         }, super.defaults);
     }
-}
 
-export class Constant extends shapes.standard.BorderedRecord {
-    defaults() {
-        return util.defaultsDeep({
-            type: 'mapping.Constant',
-            itemHeight: 20,
-            itemOffset: 5,
-            itemMinLabelWidth: 10,
-            itemIcon: { padding: 4 },
-            attrs: {
-                root: {
-                    magnet: false
-                },
-                body: {
-                    stroke: '#EBEEF0'
-                },
-                itemLabels: {
-                    fontSize: 12,
-                    fontFamily: 'Sans-serif',
-                },
-                itemLabels_1: {
-                    magnet: true
-                },
-                itemBodies_0: {
-                    stroke: '#7C90A6'
-                },
-                itemBodies: {
-                    stroke: 'none'
-                }
-            },
-            items: [
-                [{
-                    id: 'icon',
-                    icon: 'assets/images/clipboard.svg',
-                }],
-                [{
-                    id: 'value',
-                    label: '',
-                    span: 2
-                }],
-                []
-            ]
-        }, super.defaults);
-    }
-
-    setValue(value, opt) {
-        return this.prop(['items', 1, 0, 'label'], '"' + value + '"', opt);
-    }
-
-    getDefaultItem() {
-        return {
-            id: util.uuid(),
-            label: '""',
-            icon: 'assets/images/clipboard.svg'
-        };
-    }
-
-    getItemTools() {
-        return [
-            { action: 'edit', content: 'Edit Constant' }
-        ];
-    }
-
-    getTools() {
-        return [
-            { action: 'remove', content: warning('Remove Constant') }
-        ];
-    }
-
-    getInspectorConfig() {
-        return {
-            label: {
-                label: 'Label',
-                type: 'content-editable'
-            }
-        };
-    }
-}
-
-export class Concat extends shapes.standard.HeaderedRecord {
-    defaults() {
-        return util.defaultsDeep({
-            type: 'mapping.Concat',
-            itemHeight: 20,
-            itemOffset: 5,
-            padding: { top: 35, left: 10, right: 0, bottom: 0 },
-            itemMinLabelWidth: 50,
-            itemOverflow: true,
-            attrs: {
-                root: {
-                    magnet: false
-                },
-                body: {
-                    stroke: '#EBEEF0'
-                },
-                header: {
-                    height: 35,
-                    fill: '#F8FAFC',
-                    stroke: '#EBEEF0'
-                },
-                tabColor: {
-                    height: 5,
-                    x: 0,
-                    y: 0,
-                    width: 'calc(w)',
-                    fill: '#FF4365',
-                    stroke: '#FF4365'
-                },
-                headerLabel: {
-                    y: 5,
-                    fontFamily: 'Sans-serif',
-                    fontWeight: 300,
-                    textWrap: {
-                        text: 'concat',
-                        ellipsis: true,
-                        height: 30
-                    }
-                },
-                itemLabels: {
-                    magnet: true,
-                    fontSize: 12,
-                    fontFamily: 'Sans-serif',
-                },
-                itemLabels_0: {
-                    magnet: 'passive',
-                    cursor: 'pointer'
-                },
-                itemBodies_0: {
-                    stroke: '#EBEEF0'
-                }
-            },
-            items: [
-                [{
-                    id: 'value_1',
-                    label: 'Value 1',
-                    icon: 'assets/images/link.svg',
-                }, {
-                    id: 'value_2',
-                    label: 'Value 2',
-                    icon: 'assets/images/link.svg',
-                }, {
-                    id: 'value_3',
-                    label: 'Value 3',
-                    icon: 'assets/images/link.svg',
-                }], [{
-                    id: 'result',
-                    label: 'Result ⇛',
-                    height: 40
-                }]
-            ]
-        }, super.defaults);
-    }
-
-    preinitialize() {
-        this.markup = [{
-            tagName: 'rect',
-            selector: 'body'
-        }, {
-            tagName: 'rect',
-            selector: 'header'
-        }, {
-            tagName: 'rect',
-            selector: 'tabColor'
-        }, {
-            tagName: 'text',
-            selector: 'headerLabel'
-        }];
-    }
-
-    getNumberOfValues() {
-        return this.prop(['items', 0]).length;
-    }
-
-    getDefaultItem() {
-        return {
-            id: util.uuid(),
-            label: 'Value ' + (this.getNumberOfValues() + 1),
-            icon: 'assets/images/link.svg'
-        };
-    }
-
-    getItemTools(itemId) {
-        const groupIndex = this.getItemGroupIndex(itemId);
-        if (groupIndex !== 0)
-            return null;
-        const tools = [
-            { action: 'edit', content: 'Edit Value' },
-            { action: 'add-next-sibling', content: 'Add Value' }
-        ];
-        if (this.getNumberOfValues() > 2) {
-            tools.push({ action: 'remove', content: warning('Remove Value') });
-        }
-        tools.push();
-        return tools;
-    }
-
-    getTools() {
-        return [
-            { action: 'add-item', content: 'Add Value' },
-            { action: 'remove', content: warning('Remove Concat') }
-        ];
-    }
-
-    getInspectorConfig(itemId) {
-        const groupIndex = this.getItemGroupIndex(itemId);
-        if (groupIndex !== 0)
-            return null;
-        return {
-            label: {
-                label: 'Label',
-                type: 'content-editable'
-            }
-        };
-    }
-}
-
-export class GetDate extends shapes.standard.HeaderedRecord {
-    defaults() {
-        return util.defaultsDeep({
-            type: 'mapping.GetDate',
-            itemHeight: 20,
-            itemOffset: 5,
-            padding: { top: 35, left: 10, right: 0, bottom: 0 },
-            itemMinLabelWidth: 50,
-            itemOverflow: true,
-            attrs: {
-                root: {
-                    magnet: false
-                },
-                body: {
-                    stroke: '#EBEEF0'
-                },
-                header: {
-                    height: 35,
-                    fill: '#F8FAFC',
-                    stroke: '#EBEEF0'
-                },
-                tabColor: {
-                    height: 5,
-                    x: 0,
-                    y: 0,
-                    width: 'calc(w)',
-                    fill: '#00BC9A',
-                    stroke: '#00BC9A'
-                },
-                headerLabel: {
-                    y: 5,
-                    fontFamily: 'Sans-serif',
-                    fontWeight: 300,
-                    textWrap: {
-                        text: 'get-date',
-                        ellipsis: true,
-                        height: 30
-                    }
-                },
-                itemLabels: {
-                    magnet: true,
-                    fontSize: 12,
-                    fontFamily: 'Sans-serif',
-                },
-                itemLabels_0: {
-                    magnet: 'passive',
-                    cursor: 'pointer'
-                },
-                itemBodies: {
-                    stroke: '#EBEEF0'
-                }
-            },
-            items: [
-                [{
-                    id: 'value',
-                    label: '⇛ Value',
-                    height: 60
-                }],
-                [{
-                    id: 'year',
-                    label: 'year',
-                    icon: 'assets/images/link.svg',
-                }, {
-                    id: 'month',
-                    label: 'month',
-                    icon: 'assets/images/link.svg',
-                }, {
-                    id: 'day',
-                    label: 'day',
-                    icon: 'assets/images/link.svg',
-                }]
-            ]
-        }, super.defaults);
-    }
-
-    preinitialize() {
-        this.markup = [{
-            tagName: 'rect',
-            selector: 'body'
-        }, {
-            tagName: 'rect',
-            selector: 'header'
-        }, {
-            tagName: 'rect',
-            selector: 'tabColor'
-        }, {
-            tagName: 'text',
-            selector: 'headerLabel'
-        }];
-    }
-
-    getDefaultItem() {
-        return {
-            id: util.uuid(),
-            label: 'item',
-            icon: 'assets/images/document.svg'
-        };
-    }
-
-    getItemTools() {
-        return null;
-    }
-
-    getTools() {
-        return [
-            { action: 'remove', content: warning('Remove GetDate') }
-        ];
-    }
-
-    getInspectorConfig() {
-        return null;
-    }
 }
 
 export class Record extends shapes.standard.HeaderedRecord {
+
+    constructor(allowedTools, attributes) {
+        super(attributes);
+        this.allowedTools = allowedTools;
+    }
+
+    getValuesFromShape(shape, keySearch = 'id', values = []) {
+        shape = shape ? shape : this.attributes.items[0]
+        Object.keys(shape).map((key, index) => {
+                if (typeof keySearch === 'string' && key === keySearch) {
+                    values.push(shape[key])
+                } else if (Array.isArray(keySearch)) {
+
+                    const _keySearch = keySearch[0]
+                    const _keySearch2 = keySearch[1]
+
+                    if (shape[_keySearch2] && shape[_keySearch] && _keySearch === key) {
+                        const result = {}
+                        result[_keySearch] = shape[_keySearch]
+                        result[_keySearch2] = shape[_keySearch2]
+                        values.push(result)
+                    }
+                }
+
+                if (shape[key] && typeof shape[key] === 'object') {
+                    this.getValuesFromShape(shape[key], keySearch, values)
+                }
+            }
+        )
+        return values
+    }
+
     defaults() {
         return util.defaultsDeep({
             type: 'mapping.Record',
@@ -363,7 +68,7 @@ export class Record extends shapes.standard.HeaderedRecord {
             itemBelowViewSelector: 'footer',
             padding: { top: 35, left: 15, right: 10, bottom: 10 },
             scrollTop: 0,
-            size: { height: 300 },
+            size: { height: 400, width: 250 },
             itemOverflow: true,
             attrs: {
                 root: {
@@ -382,8 +87,8 @@ export class Record extends shapes.standard.HeaderedRecord {
                     x: 0,
                     y: 0,
                     width: 'calc(w)',
-                    fill: '#4566E5',
-                    stroke: '#4566E5'
+                    fill: '#8cc23d',
+                    stroke: '#8cc23d'
                 },
                 headerLabel: {
                     y: 5,
@@ -419,14 +124,14 @@ export class Record extends shapes.standard.HeaderedRecord {
                     fontSize: 12,
                     fontFamily: 'Sans-serif',
                     itemHighlight: {
-                        fill: '#4566E5'
+                        fill: '#8cc23d'
                     }
                 },
                 itemLabels_disabled: {
                     magnet: null,
                     fill: '#AAAAAA',
                     cursor: 'not-allowed'
-                }
+                },
             }
         }, super.defaults);
     }
@@ -454,106 +159,407 @@ export class Record extends shapes.standard.HeaderedRecord {
         return this.attr(['headerLabel', 'textWrap', 'text'], name, opt);
     }
 
-    getDefaultItem() {
+    getItemId() {
+        return `new_item_${util.uuid().substring(0, 7)}`
+
+    }
+
+    getDefaultChild(itemId, element, icon) {
+
+        icon = icon ? `mapper/${icon.toLowerCase()}.svg` : undefined
+        const id = this.getItemId()
         return {
-            id: util.uuid(),
-            label: 'new_item',
-            icon: 'assets/images/document.svg'
+            id: `${itemId}_${id}`,
+            label: `${id}`,
+            icon: 'mapper/document.svg',
+            _type: 'Leaf'
+        }
+    }
+
+    getDefaultItem(itemId, element, icon) {
+        const item = itemId && element ? element.item(itemId) : '';
+        const id = this.getItemId()
+        return {
+            id,
+            label: id,
+            icon: item.icon || "mapper/document.svg",
+            _type: item._type || "Leaf"
         };
     }
 
-    getItemTools() {
+    getNewItemId(id, newId = 'new_item') {
+        id = id.split('.')
+        id.pop()
+        return `${id.join('.')}.${newId}_${util.uuid()}`;
+    }
+
+    getItemTools(itemId) {
+        let tools = this.allowedTools
+        if (itemId === '$_root') {
+            tools = ['edit', 'add-child', 'edit-function']
+        }
         return [
             { action: 'edit', content: 'Edit Item' },
-            { action: 'edit-decorator', content: 'Edit Decorator' },
-            { action: 'add-child', content: 'Add Child' },
-            { action: 'add-next-sibling', content: 'Add Next Sibling' },
-            { action: 'add-prev-sibling', content: 'Add Prev Sibling' },
+            { action: 'edit-function', content: 'Edit User Function' },
+            { action: 'add-child', content: 'Add child' },
+            { action: 'add-child-to-array', content: 'Add child to Array' },
+            { action: 'add-child-to-object', content: 'Add child to Object' },
+            { action: 'add-next-sibling', content: 'Add next sibling' },
+            { action: 'add-prev-sibling', content: 'Add prev sibling' },
             { action: 'remove', content: warning('Remove Item') }
-        ];
+        ].filter(tool => tools.includes(tool.action));
     }
 
     getTools() {
         return [
-            { action: 'add-item', content: 'Add Child' },
-            { action: 'remove', content: warning('Remove Record') }
+            { action: 'export-to-json', content: 'Export to JSON' },
+            { action: 'import-json', content: 'Import JSON' },
+            // { action: 'add-item', content: 'Add Child' },
+            // { action: 'remove', content: warning('Remove Record') }
         ];
     }
 
-    getObjectMapperInspectorConfig() {
+    recordUpdate(itemsIds, newItems) {
+        let tempItem = this.getDefaultItem()
+        // check if is record is empty
+        if (itemsIds && !itemsIds.length && newItems.length === 1) {
+            this.set('items', [[newItems[0]]]);
+        }
+
+        if (itemsIds && itemsIds.length) {
+            this.addPrevSibling(itemsIds[0].id, tempItem)
+            itemsIds.forEach((item) => {
+                this.removeItem(item.id)
+            })
+        }
+
+        newItems.length && newItems.forEach((newItem) => {
+            this.addPrevSibling(tempItem.id, newItem)
+        })
+        this.removeItem(tempItem.id)
+
+        const isItemVisible = itemsIds.length && this.isItemVisible(itemsIds[0].id)
+    }
+
+    getItemByPath(items, path) {
+        const item = items
+        if (!path) return
+        if (path.length <= 1) {
+            return item
+        }
+        path.shift()
+        return this.getItemByPath(items[path[0]], path)
+    }
+
+    findItemById(itemId, element = this) {
+        const path = element.getItemPathArray(itemId)
+        const item = this.getItemByPath(element.attributes.items, path)
+        return item ? item : null
+    }
+
+    removeItemAndInstances(itemId, targetElement) {
+        this.startBatch('item-remove');
+        this.removeItem(itemId);
+        this.removeInvalidLinks();
+        this.stopBatch('item-remove');
+    }
+
+}
+
+export class ObjectMapperRecord extends Record {
+    // mappingSchema = {}
+
+    constructor(allowedTools, schema) {
+        const attributes = {
+            items: [
+                [ObjectMapperRecord.objectMapperSchema2Shape(schema)]
+            ]
+        }
+        super(allowedTools, attributes);
+        // this.mappingSchema = schema
+    }
+
+    //shape have to be items[0][0]
+    objectMapperSchemaShape2Schema(shape = this.attributes.items[0][0]) {
+        switch (shape._type) {
+            case 'Object':
+                const result = shape.items ? shape.items.map((_item) => this.objectMapperSchemaShape2Schema(_item)).reduce(
+                    (previousValue, currentValue) => {
+                        return Object.assign(previousValue, currentValue)
+                    }, {}) : undefined
+
+                return {
+                    [shape.label]: {
+                        ...result,
+                        _path: shape._path,
+                        _default: shape._default ? shape._default : undefined,
+                        _type: shape._type,
+                        // _transformerCode: shape._transformerCode ? shape._transformerCode : undefined,
+                    }
+                }
+            case'Array':
+                return {
+                    [shape.label]: {
+                        _element: shape.items ? shape.items.map((item) => this.objectMapperSchemaShape2Schema(item)).reduce(
+                            (previousValue, currentValue) => {
+                                return Object.assign(previousValue, currentValue)
+                            }, { ...shape.elementAttributes }) : undefined,
+
+                        _path: shape._path,
+                        _default: shape._default ? shape._default : undefined,
+                        _type: shape._type,
+                        // _transformerCode: shape._transformerCode ? shape._transformerCode : undefined,
+                    }
+                }
+
+            case'Leaf':
+                return {
+                    [shape.label]: {
+                        _path: shape._path,
+                        _default: shape._default ? shape._default : undefined,
+                        _type: shape._type,
+                        _transformerCode: shape._transformerCode ? shape._transformerCode : undefined,
+                    }
+                }
+            default:
+                throw 'Unknown schema type ==> objectMapperSchemaShape2JSON'
+        }
+    }
+
+    static objectMapperSchema2Shape(schema, label = '$_root', path = '') {
+        let result = null
+        schema = schema && schema.$_root ? schema.$_root : schema
+        switch (schema._type) {
+            case 'Object': {
+                const items = []
+                Object.keys(schema).forEach(key => {
+                    if (key[0] !== '_') {
+                        items.push(this.objectMapperSchema2Shape(schema[key], key, path + label + '.'))
+                    }
+                })
+                result = {
+                    items,
+                    icon: 'mapper/object.svg',
+                    _path: schema._path,
+                    _type: 'Object',
+                    label: `${label}`,
+                    id: path + label,
+                    _transformerCode: schema._transformerCode ? schema._transformerCode : undefined,
+                }
+            }
+                break
+            case 'Array':
+                const items = []
+                const elementAttributes = {}
+                if (schema._element) {
+                    Object.keys(schema._element).forEach(key => {
+                        if (key[0] !== '_') {
+                            items.push(this.objectMapperSchema2Shape(schema._element[key], key, path + label + '.[0].'))
+                        } else {
+                            elementAttributes[key] = schema._element[key]
+                        }
+                    })
+                }
+                result = {
+                    items,
+                    elementAttributes,
+                    _transformerCode: schema._transformerCode ? schema._transformerCode : undefined,
+                    _path: schema._path,
+                    _type: 'Array',
+                    icon: 'mapper/array.svg',
+                    label: `${label}`,
+                    id: path + label,
+                }
+                break
+            case 'Leaf':
+                result = {
+                    ...schema,
+                    label,
+                    hasDefault: !!schema._default,
+                    id: path + label,
+                    icon: 'mapper/document.svg',
+                    _transformerCode: schema._transformerCode ? schema._transformerCode : undefined,
+                }
+                break
+            default:
+                throw 'Unknown schema type ==> objectMapperSchema2Shape'
+        }
+        return result
+    }
+
+    //create instance links
+    createObjectMapper2OutputInstance(objectMapperShape, outputShape) {
+
+        const objectMapperIds = this.getValuesFromShape(objectMapperShape)
+        const outputIds = this.getValuesFromShape(outputShape)
+
+        const result = []
+        objectMapperIds.forEach((source) => {
+            const index = source.indexOf('.')
+            if (index >= 0) {
+
+                const target = source.substring(index + 1)
+
+                if (outputIds.includes(target)) {
+                    const link = {
+                        source,
+                        target,
+                    }
+                    result.push(link)
+                }
+            }
+        })
+        return result
+    }
+
+    //create instance links
+    createInput2ObjectMapperInstance(objectMapperShape, inputShape) {
+        const objectMapperIds = this.getValuesFromShape(objectMapperShape, ['_absPath', 'id'])
+        const inputIds = this.getValuesFromShape(inputShape)
+        const result = []
+        objectMapperIds.map((link) => {
+            // let source = cutStringFromSymbol(link['_absPath'], '.')
+            let source = link['_absPath']
+
+            source = _replaceAll(source, '[*]', '[0]')
+            if (inputIds.includes(source)) {
+                result.push({
+                    source,
+                    target: link['id'],
+                })
+            }
+        })
+        return result
+    }
+
+    getInspectorConfig() {
         return {
             label: {
                 label: 'Label',
                 type: 'content-editable'
             },
             _path: {
-                label: '_path',
+                label: 'path',
                 type: 'content-editable'
+            },
+            hasDefault: {
+                label: 'Has Default',
+                type: 'toggle',
+                defaultValue: false
             },
             _default: {
-                label: '_default',
-                type: 'content-editable'
+                // when: { eq: { 'hasDefault': true } },
+                label: 'default',
+                type: 'content-editable',
+                // defaultValue: ''
             },
             _type: {
-                label: '_type',
-                type: 'content-editable'
+                label: 'type',
+                type: 'select',
+                options: [
+                    'Array',
+                    'Object',
+                    'Leaf'
+                ]
             },
-            _pathLevelUp: {
-                label: '_pathLevelUp',
-                type: 'content-editable'
-            },
-            icon: {
-                label: 'Icon',
-                type: 'select-button-group',
-                // options: [{
-                //         value: 'assets/images/link.svg',
-                //         content: '<img height="42px" src="assets/images/link.svg"/>'
-                //     }, {
-                //         value: 'assets/images/document.svg',
-                //         content: '<img height="42px" src="assets/images/document.svg"/>'
-                //     }, {
-                //         value: 'assets/images/clipboard.svg',
-                //         content: '<img height="42px" src="assets/images/clipboard.svg"/>'
-                //     }, {
-                //         value: 'assets/images/file.svg',
-                //         content: '<img height="42px" src="assets/images/file.svg"/>'
-                //     }]
-            },
-            highlighted: {
-                label: 'Highlight',
-                type: 'toggle'
-            }
-        };
+        }
     }
-    getJSONInspectorConfig() {
+}
+
+export class JsonRecord extends Record {
+
+    constructor(allowedTools, JSON) {
+        const items = JsonRecord.transformJSON2Shape(JSON)
+        const attributes = {
+            items: [items ? items : []]
+        }
+        super(allowedTools, attributes);
+        // this.JSON = JSON
+    }
+
+    static transformJSON2Shape(obj, path = '') {
+        // if is object is observed and empty
+
+        if (this.attributes.items && this.attributes.items.length === 0) {
+            this.remove();
+            return
+        }
+        if (obj && typeof obj === 'object') {
+            const isArray = Array.isArray(obj)
+
+            return Object.keys(obj).map((key) => {
+
+                const _key = isArray ? `[${key}]` : key
+
+                const label = createKeyValueString(key, obj[key])
+
+                const items = this.transformJSON2Shape(obj[key], path + _key + '.')
+
+                return items ?
+                    {
+                        key,
+                        isArray,
+                        label,
+                        value: 'Object',
+                        items,
+                        id: path + _key,
+                        icon: `mapper/${isArray ? 'array' : 'object'}.svg`
+                    } : {
+                        icon: 'mapper/document.svg',
+                        key,
+                        isArray,
+                        label,
+                        value: obj[key],
+                        id: path + _key,
+                    }
+            })
+        }
+    }
+
+
+    getInspectorConfig() {
         return {
-            label: {
-                label: 'Label',
-                type: 'content-editable'
+            key: {
+                label: 'key',
+                type: 'content-editable',
             },
 
-            icon: {
-                label: 'Icon',
-                type: 'select-button-group',
-                // options: [{
-                //         value: 'assets/images/link.svg',
-                //         content: '<img height="42px" src="assets/images/link.svg"/>'
-                //     }, {
-                //         value: 'assets/images/document.svg',
-                //         content: '<img height="42px" src="assets/images/document.svg"/>'
-                //     }, {
-                //         value: 'assets/images/clipboard.svg',
-                //         content: '<img height="42px" src="assets/images/clipboard.svg"/>'
-                //     }, {
-                //         value: 'assets/images/file.svg',
-                //         content: '<img height="42px" src="assets/images/file.svg"/>'
-                //     }]
+            value: {
+                label: 'value',
+                type: 'content-editable'
             },
-            highlighted: {
-                label: 'Highlight',
-                type: 'toggle'
-            }
         };
+    }
+
+    //shape have to be items[0]
+    transformShape2JSON(shape = this.attributes.items[0]) {
+        if (!Array.isArray(shape)) {
+            const value = shape.value === null || shape.value === undefined ? this.transformShape2JSON(shape.items) : shape.value
+            return shape.isArray ? value : { [shape.key]: value }
+        }
+        const response = shape.map(_item => this.transformShape2JSON(_item))
+
+        if (shape.isArray) {
+            return response
+        }
+
+        return response.reduce(
+            (previousValue, currentValue) => {
+                return Object.assign(previousValue, currentValue)
+            }, {})
+    }
+
+}
+
+export class InputRecord extends JsonRecord {
+    constructor(allowedTools, JSON) {
+        super(allowedTools, JSON);
+    }
+}
+
+export class OutputRecord extends JsonRecord {
+    constructor(allowedTools, JSON) {
+        super(allowedTools, JSON);
     }
 }
 
@@ -569,11 +575,8 @@ const RecordView = shapes.standard.RecordView;
 Object.assign(shapes, {
     mapping: {
         Link,
-        Constant,
         ConstantView,
-        Concat,
         ConcatView,
-        GetDate,
         GetDateView,
         Record,
         RecordView

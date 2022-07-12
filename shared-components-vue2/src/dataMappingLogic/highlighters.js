@@ -1,4 +1,4 @@
-import { dia } from '@clientio/rappid';
+import { dia } from '@OtailO-recommerce/rappid';
 
 export const Decorator = dia.HighlighterView.extend({
     
@@ -17,6 +17,7 @@ export const Decorator = dia.HighlighterView.extend({
     },
     
     onClick(evt) {
+        debugger
         const { cellView, node } = this;
         const itemId = cellView.findAttribute('item-id', node);
         cellView.paper.trigger('element:decorator:pointerdown', cellView, evt, itemId);

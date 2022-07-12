@@ -1,0 +1,41 @@
+{
+  "name": "controller-frontend",
+  "version": "0.0.1",
+  "description": "Makegood Project",
+  "productName": "Makegood",
+  "author": "Makegood <makegood2you@gmail.com>",
+  "private": true,
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.14.1",
+    "axios": "^0.21.1",
+    "core-js": "^3.6.5",
+    "dayjs": "^1.11.3",
+    "jwt-decode": "^3.1.2",
+    "quasar": "^1.19.2",
+    "uuid": "^8.3.2",
+    "vue-i18n": "^8.0.0"
+  },
+  "devDependencies": {
+    "@quasar/app": "^2.0.0",
+    "quasar-app-extension-qdatetimepicker": "^1.0.0-rc.17"
+  },
+  "browserslist": [
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 4 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
+  ],
+  "engines": {
+    "node": ">= 10.18.1",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
+}

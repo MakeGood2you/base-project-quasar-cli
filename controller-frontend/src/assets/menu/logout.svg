@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>6B8C1681-ECD7-4113-B5E9-9D6E10344860@1.5x</title>
+    <defs>
+        <filter color-interpolation-filters="auto" id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.305882 0 0 0 0 0.305882 0 0 0 0 0.313725 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+        <path d="M5.90833333,10.4916667 L7.08333333,11.6666667 L11.25,7.5 L7.08333333,3.33333333 L5.90833333,4.50833333 L8.05833333,6.66666667 L0,6.66666667 L0,8.33333333 L8.05833333,8.33333333 L5.90833333,10.4916667 Z M13.3333333,0 L1.66666667,0 C0.741666667,0 0,0.75 0,1.66666667 L0,5 L1.66666667,5 L1.66666667,1.66666667 L13.3333333,1.66666667 L13.3333333,13.3333333 L1.66666667,13.3333333 L1.66666667,10 L0,10 L0,13.3333333 C0,14.25 0.741666667,15 1.66666667,15 L13.3333333,15 C14.25,15 15,14.25 15,13.3333333 L15,1.66666667 C15,0.75 14.25,0 13.3333333,0 Z" id="path-2"></path>
+    </defs>
+    <g id="Back-Office" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Back-Office:-Customer-Care-1-1" transform="translate(-26.000000, -985.000000)">
+            <g id="Menu" transform="translate(-1.000000, -1.000000)">
+                <g id="Footer" transform="translate(0.000000, 922.000000)">
+                    <g id="icon/action/supervised_user_circle_24px" transform="translate(0.000000, 48.000000)" filter="url(#filter-1)">
+                        <g transform="translate(27.500000, 16.500000)">
+                            <mask id="mask-3" fill="white">
+                                <use xlink:href="#path-2"></use>
+                            </mask>
+                            <g id="icon/action/exit_to_app_24px" fill-rule="nonzero"></g>
+                            <g id="Group" mask="url(#mask-3)">
+                                <g transform="translate(-2.500000, -2.500000)" id="↳-Color">
+                                    <rect id="Rectangle" fill="#000000" x="0" y="0" width="20" height="20"></rect>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

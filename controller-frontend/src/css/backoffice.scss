@@ -1,0 +1,297 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import './quasar.variables';
+
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+  font-family: Montserrat, sans-serif;
+}
+
+.backoffice {
+
+  &.backoffice-login-page,
+  &.backoffice-forgot-password-page,
+  &.backoffice-reset-password-page {
+    height: 100vh;
+
+    .logo {
+      padding: 5px;
+      max-width: 100%;
+      text-align: center;
+      border-bottom: 1px solid $color1;
+    }
+
+    .backoffice-title {
+      margin: 2em 0;
+      font-size: 22px;
+      text-align: center;
+    }
+
+    .login-form {
+      width: 400px;
+      margin: auto;
+      padding: 0 16px;
+      max-width: 100%;
+      box-shadow: none;
+      background: #fff;
+      border-radius: 4px;
+      border: 2px solid $color1;
+
+      .login-form-title {
+        font-size: 20px;
+        text-align: center;
+        margin: .5em 0 1.5em;
+      }
+
+      .error-message {
+        font-size: 12px;
+      }
+
+      .hasError {
+        color: $error;
+        font-size: 12px;
+      }
+
+      .hasSuccess {
+        color: #21BA45;
+        font-size: 12px;
+      }
+
+      .forgot-password {
+        color: #8CC23D;
+        font-size: 14px;
+        letter-spacing: 0.47px;
+        line-height: 16px;
+      }
+    }
+  }
+
+  // General
+
+  header {
+    border-bottom: 1px solid $color1;
+
+    .q-toolbar__title {
+      font-size: 16px;
+    }
+
+    .logo {
+      max-width: 100%;
+
+      img {
+        padding: 5px;
+      }
+    }
+  }
+
+  .q-drawer-container {
+
+    .q-drawer {
+      padding: 5px;
+      background-color: $color1;
+      //border-right: 1px solid $border;
+
+      * { outline: none; }
+
+      .q-btn {
+        width: 100%;
+        color: #000;
+      }
+
+      .q-drawer__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .q-list {
+
+          .q-item {
+            height: 48px;
+            border-radius: 4px;
+            color: rgba(0,0,0,0.6);
+            margin-bottom: 5px;
+
+            .q-item__section {
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              flex-direction: unset;
+
+              .q-item__label {
+                font-size: 14px;
+              }
+            }
+
+            &.active {
+              color: #8CC23D;
+              background-color: rgba(140,194,61,0.17);
+
+              .q-item__label {
+                font-weight: bold;
+              }
+            }
+          }
+
+          .q-expansion-item {
+
+            .q-item__section {
+              min-width: auto;
+              padding-right: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .filters-title {
+    font-size: 16px;
+    border-bottom: 1px solid $color1;
+  }
+
+  .q-splitter {
+    height: 100vh;
+
+    .q-splitter__separator {
+      background-color: $color1;
+    }
+  }
+
+  .q-field__label {
+    font-size: 14px;
+  }
+
+  .q-field--with-bottom {
+    padding-bottom: 0
+  }
+
+  .q-field__bottom {
+    min-height: auto;
+  }
+
+  .q-field__bottom--animated {
+    position: relative;
+    transform: none;
+  }
+
+  .q-table__container {
+    box-shadow: none;
+
+    .q-table__top {
+      margin-bottom: 20px;
+
+      .q-table__control {
+
+        .q-table__title {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .q-table__middle {
+      .q-table {
+        thead {
+          tr {
+            th {
+              width: 10%;
+            }
+          }
+        }
+      }
+    }
+
+    .q-table__bottom {
+      border-top: 1px solid $color1;
+    }
+  }
+
+  .q-separator {
+    background: $color1;
+  }
+
+  .q-field__save-btn {
+    color: #8CC23D;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .q-field__cancel-btn {
+    color: #000;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  ///////////////////////////////////////
+
+  // ReturnTab
+  .return-tab-page {
+
+  }
+
+  // InspectionsTab
+  .inspections-tab-page {
+
+  }
+
+  // StatsTab
+  .stats-tab-page {
+
+  }
+
+  // UsersTab
+  .users-tab-page {
+  }
+
+  // ReturnReasonsTab
+  .return-reasons-tab-page {
+
+  }
+
+  // GeographicLayersTab
+  .geographic-layers-tab-page {
+
+  }
+
+  // Change password
+  .change-password-page {
+
+    .q-form {
+      width: 350px;
+      max-width: 100%;
+    }
+  }
+}
+
+.backoffice-footer {
+  padding: 10px;
+  text-align: center;
+  background: $color1;
+}
+
+.v-toaster {
+  top: 10px;
+
+  .v-toast {
+
+    &.v-toast-success {
+      background: #21ba45;
+      border-color: #21ba45;
+    }
+
+    &.v-toast-info {
+      background: #bdbdbd;
+      border-color: #bdbdbd;
+    }
+
+    &.v-toast-error {
+      background: #c10015;
+      border-color: #c10015;
+    }
+  }
+}
