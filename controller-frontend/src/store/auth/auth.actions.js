@@ -12,7 +12,7 @@ export async function loginAdmin({ commit }, user) {
 
 export async function forgotPassword({ commit }, form) {
   try {
-    return await HTTP.post('/auth/forgot-password', { email: form.email })
+    return await HTTP.post('/authentication/forgot-password', { email: form.email })
   } catch (err) {
     throw err
   }
@@ -21,7 +21,7 @@ export async function forgotPassword({ commit }, form) {
 
 export async function resetPassword({ commit }, form) {
   try {
-    return await HTTP.post('/auth/reset-password', form)
+    return await HTTP.post('/authentication/reset-password', form)
   } catch (err) {
     throw err
   }
@@ -30,7 +30,7 @@ export async function resetPassword({ commit }, form) {
 
 export async function changePassword({ commit }, params) {
   try {
-    return await HTTP.post('/admin/change-password', params)
+    return await HTTP.post('/authentication/change-password', params)
   } catch (err) {
     throw err
   }

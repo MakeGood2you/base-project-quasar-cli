@@ -48,6 +48,7 @@ const routes = [
     ],
   }, {
     path: '/Dashboard', name: 'Dashboard', component: () => import('../layouts/MainLayout'),
+    redirect: { name: 'UsersTab' },
     beforeEnter: isAuth,
     children: [
       {

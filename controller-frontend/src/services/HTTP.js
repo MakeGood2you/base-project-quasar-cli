@@ -78,7 +78,7 @@ const setBaseURL = async (ou) => {
 
 const get = async (route, params = {}, config = {}) => new Promise(async (resolve, reject) => {
   const HTTP = await getHTTP()
-  debugger
+
   if (cancelTokens[config.cancelToken]) cancelTokens[config.cancelToken]('Request canceled.')
 
   const accessToken = params.authorization
@@ -104,6 +104,7 @@ const post = async (route, params, config = {}) => {
     if (cancelTokens[config.cancelToken]) cancelTokens[config.cancelToken]('Request canceled.')
 
     const HTTP = await getHTTP()
+    debugger
    return HTTP.post(route, params, {
       headers: {
         'X-Request-ID': v1(),

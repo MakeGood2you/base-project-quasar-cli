@@ -6,10 +6,10 @@
       @onRequest="onRequest">
 
       <template v-slot:top-right>
-        <base-button :el="addNewUser" class="q-mr-sm" />
+        <base-button :el="addNewUser" class="q-mr-sm"/>
         <q-input v-model="filter" :placeholder="$t('labels.search')" borderless dense outlined autofocus>
           <template v-slot:append>
-            <q-icon name="search" />
+            <q-icon name="search"/>
           </template>
         </q-input>
       </template>
@@ -18,31 +18,31 @@
         <q-tr :props="props">
           <q-td key="first_name">
             <span v-if="props.props.row.uuid === editMode">
-              <base-input :el="firstName" />
+              <base-input :el="firstName"/>
             </span>
             <span v-else v-text="props.props.row.first_name"></span>
           </q-td>
           <q-td key="last_name">
             <span v-if="props.props.row.uuid === editMode">
-              <base-input :el="lastName" />
+              <base-input :el="lastName"/>
             </span>
             <span v-else v-text="props.props.row.last_name"></span>
           </q-td>
           <q-td key="email">
             <span v-if="props.props.row.uuid === editMode">
-              <base-input :el="email" />
+              <base-input :el="email"/>
             </span>
             <span v-else v-text="props.props.row.email"></span>
           </q-td>
           <q-td key="role">
             <span v-if="props.props.row.uuid === editMode">
-              <base-select :el="roles" />
+              <base-select :el="roles"/>
             </span>
             <span v-else v-text="props.props.row.roles.join(', ')"></span>
           </q-td>
           <q-td key="password">
             <span v-if="props.props.row.uuid === editMode">
-              <base-input :el="password" />
+              <base-input :el="password"/>
             </span>
           </q-td>
           <q-td key="actions" class="text-right">
@@ -55,11 +55,11 @@
             <div v-else class="flex justify-end">
               <router-link :to="{}" class="flex q-mr-lg">
                 <router-link to="#" @click.native="editUser(props.props.row)" class="flex">
-                  <img src="../../assets/edit.svg" alt="Edit" />
+                  <img src="../../assets/edit.svg" alt="Edit"/>
                 </router-link>
               </router-link>
               <router-link to="#" @click.native="deleteUser(props.props.row.uuid)" class="flex">
-                <img src="../../assets/delete.svg" alt="Delete" />
+                <img src="../../assets/delete.svg" alt="Delete"/>
               </router-link>
             </div>
 
@@ -76,6 +76,8 @@ import BaseNewTable from '../../components/BaseNewTable'
 import BaseButton from '../../components/form/BaseButton'
 import BaseInput from '../../components/form/BaseInput'
 import BaseSelect from '../../components/form/BaseSelect'
+import { mapState } from 'vuex'
+import { extend } from 'quasar'
 
 const email_pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,5})+$/
 
@@ -86,7 +88,7 @@ export default {
     BaseInput,
     BaseSelect
   },
-  data () {
+  data() {
     return {
       form: {},
       data: [],
@@ -106,7 +108,8 @@ export default {
     }
   },
   computed: {
-    usersData () {
+    ...mapState('users', ['users']),
+    usersData() {
       return {
         name: 'users',
         title: this.$t('usersTab.title'),
@@ -158,7 +161,7 @@ export default {
         binaryStateSort: true
       }
     },
-    addNewUser () {
+    addNewUser() {
       return {
         type: 'button',
         buttonType: 'button',
@@ -182,7 +185,7 @@ export default {
       }
     },
 
-    firstName () {
+    firstName() {
       return {
         type: 'input',
         inputType: 'text',
@@ -198,7 +201,7 @@ export default {
         error: this.isSubmit && !(this.form.first_name && this.form.first_name.length > 0)
       }
     },
-    lastName () {
+    lastName() {
       return {
         type: 'input',
         inputType: 'text',
@@ -214,7 +217,7 @@ export default {
         error: this.isSubmit && !(this.form.last_name && this.form.last_name.length > 0)
       }
     },
-    email () {
+    email() {
       return {
         type: 'input',
         inputType: 'email',
@@ -230,7 +233,7 @@ export default {
         error: this.isSubmit && !(this.form.email && email_pattern.test(this.form.email))
       }
     },
-    roles () {
+    roles() {
       return {
         form: this.form,
         key: 'roles',
@@ -243,7 +246,7 @@ export default {
         menuAnchor: 'bottom start'
       }
     },
-    password () {
+    password() {
       return {
         type: 'input',
         inputType: 'password',
@@ -261,11 +264,18 @@ export default {
     }
   },
   methods: {
-    async fetchFromServer (search, offset, limit, sortBy = 'createdAt', descending) {
+    async fetchFromServer(search, offset, limit, sortBy = 'createdAt', descending) {
       descending = descending ? 'ASC' : 'DESC'
-      debugger
+
       const authorization = sessionStorage.get('accessToken')
-      return await this.$store.dispatch('users/getUsers', { search, offset, limit, sort_by: sortBy, descending, authorization})
+      return await this.$store.dispatch('users/getUsers', {
+        search,
+        offset,
+        limit,
+        sort_by: sortBy,
+        descending,
+        authorization
+      })
     },
     async onRequest(props) {
       const { sortBy, descending, page, rowsPerPage, rowsNumber } = props.pagination
@@ -279,7 +289,8 @@ export default {
 
         this.loading = true
         const { users, count } = await this.fetchFromServer(this.filter, offset, limit, sortBy, descending)
-        this.data = users
+
+        this.data = extend(true, [], this.users)
 
         this.pagination.sortBy = sortBy
         this.pagination.descending = descending
@@ -294,7 +305,7 @@ export default {
         this.loading = false
       }
     },
-    checkValidate (form) {
+    checkValidate(form) {
       try {
 
         const firstName = form.first_name && form.first_name.length > 0
@@ -347,6 +358,10 @@ export default {
             delete form.uuid
           }
           await this.$store.dispatch('users/' + type, form)
+
+          await this.onRequest({
+            pagination: this.pagination
+          })
           this.onCancel(1)
         }
 
